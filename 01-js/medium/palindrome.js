@@ -8,25 +8,18 @@
 
 function isPalindrome(str) {
   str = str.toLowerCase();
-
+  str = str.replace(/[\s.,!?;:(){}[\]"'`~<>@#$%^&*+=-]+/g, '');
   let start = 0;
   let end = str.length - 1;
 
   while (start < end) {
     if (str[start] !== str[end]) {
-      console.log(false);
       return false;
     }
     start++;
     end--;
   }
-  console.log(true);
   return true;
 }
-
-isPalindrome('Nan');
-isPalindrome('Abba');
-isPalindrome('Abbaa');
-isPalindrome('');
 
 module.exports = isPalindrome;

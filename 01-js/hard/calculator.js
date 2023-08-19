@@ -17,6 +17,86 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+      this.result = 0;
+  }
+
+  add(num) {
+      this.result += num;
+  }
+
+  subtract(num) {
+      this.result -= num;
+  }
+
+  multiply(num) {
+      this.result *= num;
+  }
+
+  divide(num) {
+      if (num === 0) {
+          throw new Error("Division by zero is not allowed.");
+      }
+      this.result /= num;
+  }
+
+  clear() {
+      this.result = 0;
+  }
+
+  getResult() {
+      return this.result;
+  }
+
+  calculate(str) {
+      this.clear();
+
+      const tokenize = (expr) => {
+          return expr.match(/(\d+\.\d+|\d+|\+|\-|\*|\/|\(|\))/g);
+      };
+
+      const evaluateTokens = (tokens) => {
+          let stack = [];
+          while (tokens.length) {
+              let token = tokens.shift();
+              switch (token) {
+                  case '+':
+                      stack.push(stack.pop() + evaluateTokens(tokens));
+                      break;
+                  case '-':
+                      stack.push(stack.pop() - evaluateTokens(tokens));
+                      break;
+                  case '*':
+                      stack.push(stack.pop() * evaluateTokens(tokens));
+                      break;
+                  case '/':
+                      stack.push(stack.pop() / evaluateTokens(tokens));
+                      break;
+                  case '(':
+                      stack.push(evaluateTokens(tokens));
+                      break;
+                  case ')':
+                      return stack.pop();
+                  default:
+                      if (isNaN(token)) {
+                          throw new Error("Invalid character in expression.");
+                      }
+                      stack.push(parseFloat(token));
+                      break;
+              }
+          }
+          return stack[0];
+      };
+
+      const tokens = tokenize(str);
+      this.result = evaluateTokens(tokens);
+      return this.result;
+  }
+}
+
+// Test
+let calc = new Calculator();
+console.log(calc.calculate('10 +   2 *    (   6 - (4 + 1) / 2) + 7')); // Expected: 20
 
 module.exports = Calculator;

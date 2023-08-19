@@ -15,13 +15,8 @@ function calculateTime(n) {
         sum += i;
     }
     let end = new Date();
-    console.log((end - start) / 1000);
     return (end - start) / 1000;
 }
-
-calculateTime(100);
-calculateTime(100000);
-calculateTime(1000000000);
 
 
 module.exports = calculateTime;

@@ -19,25 +19,17 @@ function calculateTotalSpentByCategory(transactions) {
       continue;
     }
 
-    let total = 0;
+    let totalSpent = 0;
     for (let j = 0; j < transactions.length; j++) {
       if (transactions[j].category === category) {
-        total += transactions[j].price;
+        totalSpent += transactions[j].price;
       }
     }
 
-    result.push({[category]: total});
+    result.push({'category':category,'totalSpent': totalSpent});
     categorySeen.add(category);
   }
-  console.log(result);
   return result;
 }
-
-calculateTotalSpentByCategory([
-  { itemName: 'item1', category: 'cat1', price: 100, timestamp: 1 },
-  { itemName: 'item2', category: 'cat2', price: 200, timestamp: 2 },
-  { itemName: 'item3', category: 'cat1', price: 300, timestamp: 3 },
-  { itemName: 'item4', category: 'cat2', price: 400, timestamp: 4 },
-]);
 
 module.exports = calculateTotalSpentByCategory;
